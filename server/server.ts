@@ -18,7 +18,7 @@ app.use(cors({ origin: "http://localhost:3000" }));
     res.render("index", {
       fetchURL,
       videos: [
-        ...(await fetch(fetchURL + "/video?amount=2").then((res) =>
+        ...(await fetch(fetchURL + "/video?amount=40").then((res) =>
           res.json()
         )),
       ],
