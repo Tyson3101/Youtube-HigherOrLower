@@ -71,13 +71,13 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
 
   function wrongAnswered() {
     setFails(fails + 1);
-    setScore(0);
     deleteVideo(0, 2);
     setGameEnd(true);
   }
 
   function restart() {
     setGameEnd(false);
+    setScore(0);
   }
   return (
     <>
