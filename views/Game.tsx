@@ -169,15 +169,12 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
           )}
         </div>
       </div>
-      <div
-        className="gameEnded"
-        style={{ display: gameEnd ? "block" : "none" }}
-      >
+
+      <div className="gameEnded" style={{ display: gameEnd ? "flex" : "none" }}>
         <h1 className="failedMsg">You failed.</h1>
-        <div className="scoreGameEnd">
-          <h3>Your score was</h3>
-          <h1>{score}</h1>
-        </div>
+        <h3 className="endScoreLittle">Your score was</h3>
+        <h1 className="endScoreBig">{score}</h1>
+
         <button onClick={restart} className="restart">
           Restart
         </button>

@@ -82,8 +82,13 @@ img.thumbnail {
 }
 
 .gameEnded {
-  min-height: 60vh;
-  min-width: 40vw;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 40vh;
+  min-width: 100vw;
   color: white;
 }
 
@@ -101,4 +106,17 @@ button.restart {
 
 .loading {
   color: white;
+}
+
+.failedMsg {
+  font-size: 12rem;
+  color: red;
+}
+
+.endScoreLittle {
+  margin-top: 1rem;
+}
+
+.endScoreBig {
+  font-size: 8.4rem;
 }
