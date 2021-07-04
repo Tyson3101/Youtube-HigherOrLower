@@ -51,6 +51,10 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
     getVideos();
   }, []);
 
+  useEffect(() => {
+    if (score >= highScore) setHighScore(score);
+  }, [score]);
+
   function chose(option: "higher" | "lower") {
     let rightAnswer: boolean;
     if (option === "higher") {
@@ -61,8 +65,7 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   }
 
   function correctAnswered() {
-    setScore((PREVscore) => PREVscore + 1);
-    if (score >= highScore) setHighScore(score);
+    setScore(score + 1);
     deleteVideo(0, 1);
   }
 

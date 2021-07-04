@@ -6,7 +6,7 @@ import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const fetchURL = "https://youtube-give-videos.herokuapp.com/";
+const fetchURL = "https://youtube-give-videos.herokuapp.com";
 
 app.use(cors({ origin: "http://localhost:3000" }));
 (async () => {
