@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: rgb(13, 14, 14);
+}
+
+.header {
+  background-color: rgb(245, 71, 71);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1.headerTitle {
+  font-size: 3.4vh;
+  color: black;
+}
+
+.headerImg {
+  height: 96px;
+  margin-top: 4px;
+}
+
+.game {
+  gap: 1rem;
+  margin-left: 4vw;
+  margin-right: 4vw;
+}
+
+.video {
+  min-height: 60vh;
+  min-width: 40vw;
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+img.thumbnail {
+  height: 40vh;
+  width: 100%;
+}
+
+.choose {
+  min-width: 10vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.choose button {
+  width: 10vw;
+  height: 20vh;
+  font-size: 2rem;
+}
+
+.choose button img {
+  width: 9vw;
+  height: 17vh;
+}
+
+.viewCount {
+  font-size: 2vw;
+  background-color: white;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vidInfo {
+  font-size: 1.1rem;
+  margin: 0 4px 0 4px;
+}
+
+.channel {
+  font-size: 1.3rem;
+}
+
+.gameEnded {
+  min-height: 60vh;
+  min-width: 40vw;
+  color: white;
+}
+
+button.restart {
+  padding: 6rem;
+  background-color: rgb(116, 102, 102);
+  color: black;
+  font-size: xx-large;
+}
+
+.gameInfo {
+  margin-bottom: 2vh;
+  background-color: rgba(245, 71, 71, 0.4);
+}
+
+.loading {
+  color: white;
+}
