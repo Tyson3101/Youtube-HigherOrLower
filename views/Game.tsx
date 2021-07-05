@@ -128,13 +128,16 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
             style={{ backgroundColor: "green" }}
             onClick={() => chose("higher")}
           >
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Green-Up-Arrow.svg/1077px-Green-Up-Arrow.svg.png" />
+            <img
+              alt="More Views"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Green-Up-Arrow.svg/1077px-Green-Up-Arrow.svg.png"
+            />
           </button>
           <button
             style={{ backgroundColor: "red", color: "white" }}
             onClick={() => chose("lower")}
           >
-            <img src="https://lh3.googleusercontent.com/proxy/UTb1QoUqLWBegBN0-kIyq2F6dGom8OYny8bj8q2H0okq2BKZnbquFE-vH2xdlqINMUxgZYyE24OQvn_UNNcS3owy6N4ffio" />
+            <img src="https://i.imgur.com/Q1ocjWQ.png" alt="Less Views" />
           </button>
         </div>
         <div>
