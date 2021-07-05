@@ -1,14 +1,16 @@
 import fetch from "node-fetch";
 import React, { useState, useEffect } from "react";
 import { Video } from "youtube-helper";
+import { useCookies } from "react-cookie";
 
 function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   const [loadingFirstVid, setLoadingFirstVid] = useState(true);
   const [loadingSecondVid, setLoadIngSecondVid] = useState(true);
   const [mainVid, setMainVid] = useState(videos[0]);
   const [compareVid, setCompareVid] = useState(videos[1]);
+  const [cookies, setCookie, removeCookie] = useCookies(["highScore"]);
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
+  const [highScore, setHighScore] = useState(cookies.highScore ?? 0);
   const [gameEnd, setGameEnd] = useState(false);
   const [videoList, _setVideoList] = useState(() => new Array() as Video[]);
 
@@ -24,7 +26,7 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   }
 
   useEffect(() => {
-    setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
+    if (!cookies?.highScore) setCookie("highScore", 0);
     async function getVideos() {
       addVideo([...Array.from(videos)]);
       setLoadingFirstVid(false);
@@ -54,9 +56,12 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   useEffect(() => {
     if (score >= highScore) {
       setHighScore(score);
-      localStorage.setItem("highScore", `${score}`);
     }
   }, [score]);
+
+  useEffect(() => {
+    setCookie("highScore", score);
+  }, [highScore]);
 
   function chose(option: "higher" | "lower") {
     let rightAnswer: boolean;
