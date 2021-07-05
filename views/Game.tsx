@@ -8,11 +8,15 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   const [loadingSecondVid, setLoadIngSecondVid] = useState(true);
   const [mainVid, setMainVid] = useState(videos[0]);
   const [compareVid, setCompareVid] = useState(videos[1]);
-  const [cookies, setCookie, removeCookie] = useCookies(["highScore"]);
+  const [cookies, setCookie, _removeCookie] = useCookies(["highScore"]);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(cookies.highScore ?? 0);
   const [gameEnd, setGameEnd] = useState(false);
   const [videoList, _setVideoList] = useState(() => new Array() as Video[]);
+
+  const cookieOptions = {
+    expires: new Date(new Date().setFullYear(new Date().getFullYear() + 7)),
+  };
 
   function addVideo(value: any) {
     if (Array.isArray(value)) videoList.push(...value);
@@ -26,7 +30,7 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   }
 
   useEffect(() => {
-    if (!cookies?.highScore) setCookie("highScore", 0);
+    if (!cookies?.highScore) setCookie("highScore", 0, cookieOptions);
     async function getVideos() {
       addVideo([...Array.from(videos)]);
       setLoadingFirstVid(false);
@@ -60,7 +64,7 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   }, [score]);
 
   useEffect(() => {
-    setCookie("highScore", score);
+    setCookie("highScore", score, cookieOptions);
   }, [highScore]);
 
   function chose(option: "higher" | "lower") {
