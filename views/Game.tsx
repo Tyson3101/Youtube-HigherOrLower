@@ -9,7 +9,6 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   const [compareVid, setCompareVid] = useState(videos[1]);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
-  const [fails, setFails] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
   const [videoList, _setVideoList] = useState(() => new Array() as Video[]);
 
@@ -25,6 +24,7 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   }
 
   useEffect(() => {
+    setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
     async function getVideos() {
       addVideo([...Array.from(videos)]);
       setLoadingFirstVid(false);
@@ -52,7 +52,10 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   }, []);
 
   useEffect(() => {
-    if (score >= highScore) setHighScore(score);
+    if (score >= highScore) {
+      setHighScore(score);
+      localStorage.setItem("highScore", `${score}`);
+    }
   }, [score]);
 
   function chose(option: "higher" | "lower") {
@@ -70,7 +73,6 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   }
 
   function wrongAnswered() {
-    setFails(fails + 1);
     deleteVideo(0, 2);
     setGameEnd(true);
   }
@@ -88,9 +90,6 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
           </li>
           <li className="highscore">
             <h1>High Score: {highScore}</h1>
-          </li>
-          <li className="fails">
-            <h1>Fails: {fails}</h1>
           </li>
         </ul>
       </div>
