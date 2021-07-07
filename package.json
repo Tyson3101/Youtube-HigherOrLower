@@ -5,7 +5,6 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev --project tsconfig.server.json server/server.ts",
     "compile": "tsc --project tsconfig.server.json"
   },
   "keywords": [],
