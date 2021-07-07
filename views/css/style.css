@@ -94,14 +94,16 @@ img.thumbnail {
 
 button.restart {
   padding: 6rem;
-  background-color: rgb(116, 102, 102);
+  background-color: rgb(245, 71, 71);
   color: black;
   font-size: xx-large;
 }
 
 .gameInfo {
+  border-top: 2px solid black;
   margin-bottom: 2vh;
-  background-color: rgba(245, 71, 71, 0.4);
+  background-color: rgb(220, 114, 114);
+  color: rgb(0, 0, 0);
 }
 
 .loading {

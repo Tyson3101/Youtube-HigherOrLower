@@ -1,26 +1,28 @@
 import fetch from "node-fetch";
 import React, { useState, useEffect } from "react";
 import { Video } from "youtube-helper";
-import { useCookies } from "react-cookie";
 
 function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   const [loadingFirstVid, setLoadingFirstVid] = useState(true);
   const [loadingSecondVid, setLoadIngSecondVid] = useState(true);
   const [mainVid, setMainVid] = useState(videos[0]);
   const [compareVid, setCompareVid] = useState(videos[1]);
-  const [cookies, setCookie, _removeCookie] = useCookies(["highScore"]);
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(cookies.highScore ?? 0);
   const [gameEnd, setGameEnd] = useState(false);
   const [videoList, _setVideoList] = useState(() => new Array() as Video[]);
+  const [usedVideoList, _setUsedVideoList] = useState(
+    () => new Array() as string[]
+  );
 
-  const cookieOptions = {
-    expires: new Date(new Date().setFullYear(new Date().getFullYear() + 7)),
-  };
-
-  function addVideo(value: any) {
-    if (Array.isArray(value)) videoList.push(...value);
-    else videoList.push(value);
+  function addVideo(value: Video | Video[]) {
+    if (Array.isArray(value)) {
+      videoList.push(...value);
+      usedVideoList.push(...value.map((vid) => vid.id));
+    } else {
+      videoList.push(value);
+      usedVideoList.push(value.id);
+    }
+    if (usedVideoList.length > 330) usedVideoList.splice(0, 20);
   }
 
   function deleteVideo(startIndex: number, deleteAmount: number) {
@@ -30,42 +32,24 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
   }
 
   useEffect(() => {
-    if (!cookies?.highScore) setCookie("highScore", 0, cookieOptions);
     async function getVideos() {
       addVideo([...Array.from(videos)]);
       setLoadingFirstVid(false);
       setLoadIngSecondVid(false);
       setMainVid(videoList[0]);
       setCompareVid(videoList[1]);
-      setInterval(() => console.log(videoList.length), 5000);
 
-      addVideo([
-        ...(await fetch(fetchURL + "/video?amount=27").then((res) =>
-          res.json()
-        )),
-      ]);
       setInterval(async () => {
         if (videoList.length > 100) return;
 
-        addVideo([
-          ...(await fetch(fetchURL + "/video?amount=15").then((res) =>
-            res.json()
-          )),
-        ]);
+        const vids = (
+          await fetch(fetchURL + "/videos?amount=10").then((res) => res.json())
+        ).filter((vid: Video) => !usedVideoList.includes(vid.id));
+        addVideo([...vids]);
       }, 1000);
     }
     getVideos();
   }, []);
-
-  useEffect(() => {
-    if (score >= highScore) {
-      setHighScore(score);
-    }
-  }, [score]);
-
-  useEffect(() => {
-    setCookie("highScore", score, cookieOptions);
-  }, [highScore]);
 
   function chose(option: "higher" | "lower") {
     let rightAnswer: boolean;
@@ -95,10 +79,10 @@ function Game({ videos, fetchURL }: { videos: Video[]; fetchURL: string }) {
       <div className="gameInfo">
         <ul>
           <li className="score">
-            <h1>Current Score: {score}</h1>
-          </li>
-          <li className="highscore">
-            <h1>High Score: {highScore}</h1>
+            <h1>
+              Score:{" "}
+              <span style={{ color: gameEnd ? "red" : "black" }}>{score}</span>
+            </h1>
           </li>
         </ul>
       </div>
